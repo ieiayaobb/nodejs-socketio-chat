@@ -1,4 +1,11 @@
-(function () {
+require.config({
+	paths: {
+		'socket.io': 'libs/socket.io-1.3.5'
+	}
+});
+
+require(['socket.io'], function (io) {
+
 	var d = document,
 	w = window,
 	p = parseInt,
@@ -95,9 +102,9 @@
 			d.getElementById("showusername").innerHTML = this.username;
 			this.msgObj.style.minHeight = (this.screenheight - db.clientHeight + this.msgObj.clientHeight) + "px";
 			this.scrollToBottom();
-			
+
 			//连接websocket后端服务器
-			this.socket = io.connect('ws://realtime.plhwin.com:3000');
+			this.socket = io('ws://localhost:3000');
 			
 			//告诉服务器端有用户登录
 			this.socket.emit('login', {userid:this.userid, username:this.username});
@@ -146,4 +153,4 @@
 			CHAT.submit();
 		}
 	};
-})();
+});
